@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>evtnantes</title>
+    <style>
+      
+    </style>
+  </head>
+  <body>
+    <div id="mainVue">
+      <h1>EVTNANTES</h1>
+      <div id="eventList" v-for="event in events.records">
+        <div class="event"> 
+          Nom :
+          <span class="Titre">{{ event.fields.nom }}</span>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      var apiURL = "https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_agenda-evenements-nantes-nantes-metropole&facet=emetteur&facet=rubrique&facet=lieu&facet=ville";
+
+      var mainVue = new Vue({
+
+        el: '#mainVue',
+
+        data: {
+          events: null
+        },
+
+        created: function() {
+          this.mounted();
+        },
+        
+        watch: {
+          currentBranch: "fetchData"
+        },
+
+        methods: {
+          mounted() {
+            axios
+              .get(apiURL)
+              .then(response => {
+                this.events = response.data;
+                console.log(this.events);
+                console.log(response.data);
+              })
+              .catch(error => {
+                this.errors.push(error);
+                console.log(error);
+              });
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
