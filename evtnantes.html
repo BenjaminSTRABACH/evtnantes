@@ -11,28 +11,26 @@
     <title>evtnantes</title>
     <style>
       body {
-        margin: 2%;
-      }
-
-      h2 {
-        font-size: 32px;
-      }
-
-      .event {
-
+        margin: 5%;
       }
     </style>
   </head>
   <body>
     <div id="mainVue">
       <h1>EVTNANTES</h1>
-      <div id="eventList" v-for="event in events.records">
-        <div class="event">
-          <h2 class="Titre">{{ event.fields.nom }}</h2>
-          A <span>{{ event.fields.ville }}</span> le <span>{{ event.fields.date | formatDate }}</span>
-          <p>
-              {{ event.fields.description }}
-          </p>
+      <div class="row">
+        <div class="col s12">
+          <div id="eventList" v-for="event in events.records">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-title">{{ event.fields.nom }}</div>
+                <a>A <span>{{ event.fields.ville }}</span> le <span>{{ event.fields.date | formatDate }}</span></a>
+                <p>
+                    {{ event.fields.description }}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
