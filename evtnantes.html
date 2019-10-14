@@ -3,18 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>evtnantes</title>
     <style>
-      
+      body {
+        margin: 2%;
+      }
+
+      h2 {
+        font-size: 32px;
+      }
+
+      .event {
+
+      }
     </style>
   </head>
   <body>
     <div id="mainVue">
       <h1>EVTNANTES</h1>
       <div id="eventList" v-for="event in events.records">
-        <div class="event"> 
-          Nom :
-          <span class="Titre">{{ event.fields.nom }}</span>
+        <div class="event">
+          <h2 class="Titre">{{ event.fields.nom }}</h2>
+          A <span>{{ event.fields.ville }}</span> le <span>{{ event.fields.date | formatDate }}</span>
+          <p>
+              {{ event.fields.description }}
+          </p>
         </div>
       </div>
     </div>
@@ -39,13 +57,18 @@
           currentBranch: "fetchData"
         },
 
+        filters: {
+          formatDate: function(v) {
+            return v.replace(/T|Z/g, " ");
+          }
+        },
+
         methods: {
           mounted() {
             axios
               .get(apiURL)
               .then(response => {
                 this.events = response.data;
-                console.log(this.events);
                 console.log(response.data);
               })
               .catch(error => {
